@@ -1,10 +1,9 @@
-# Jantent
-用spring boot开发的web博客系统
+# GTI
+用spring boot开发的web系统
 # 概述
+- 来自gitbub开源项目Jantent博客系统的雏形的改造和扩展
 
-- 首先要感谢两位大神，该项目的想法来源自[tale](https://github.com/otale/tale)和[MyBlog](https://github.com/JayTange/My-Blog)，本项目的想法。
-
-- 做了一些改造，增加了一些功能和一些代码的重构，并且更换了博客主题。
+- 做了一些改造，增加了一些功能和一些代码的重构，并且更换了主题。
 
 - 关于项目，对于开发的练手项目，能够工程化，严谨一些。
 
