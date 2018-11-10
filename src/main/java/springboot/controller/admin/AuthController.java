@@ -15,14 +15,18 @@ import springboot.modal.vo.UserVo;
 import springboot.service.ILogService;
 import springboot.service.IUserService;
 import springboot.util.Commons;
+import springboot.util.ImageUtil;
 import springboot.util.MyUtils;
 
 import javax.annotation.Resource;
+import javax.imageio.ImageIO;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * 登录控制
@@ -45,6 +49,46 @@ public class AuthController extends AbstractController {
     @GetMapping(value = "/login")
     public String login() {
         return "admin/login";
+    }
+    @GetMapping(value = {"", "/register"})
+    //@GetMapping(value = "/register")
+    public String register() {
+        return "admin/register";
+    }
+
+
+    @PostMapping(value = "register")
+    @ResponseBody
+    public RestResponseBo doRegister(@RequestParam String username,
+                                  @RequestParam String password,
+                                  @RequestParam String code,
+                                  HttpServletRequest request,
+                                  HttpServletResponse response) {
+        try{
+            String sessioncode =  request.getSession().getAttribute("imageCode").toString();
+            if (sessioncode!=null && !code.equalsIgnoreCase(sessioncode)){
+                return RestResponseBo.fail("验证码错误");
+            }
+            String recommend = request.getParameter("recommend");
+            System.out.println(recommend);
+            Integer recommendId = Integer.parseInt(recommend);
+            UserVo recUser = userService.queryUserById(recommendId);
+            if (recUser==null){
+                return RestResponseBo.fail("注册地址不准确，请核查");
+            }
+            String pwd2 = request.getParameter("password2");
+            if (!pwd2.equals(password)){
+                return RestResponseBo.fail("2次输入密码不一致，请重试");
+            }
+            boolean ret = userService.register(username, password,code,recommend);
+            if (!ret){
+                return RestResponseBo.fail("注册异常");
+            }
+        }catch (Exception e) {
+            String msg = "注册失败";
+            return ExceptionHelper.handlerException(logger, msg, e);
+        }
+        return RestResponseBo.ok("注册成功。");
     }
 
     @PostMapping(value = "login")
@@ -84,5 +128,21 @@ public class AuthController extends AbstractController {
             e.printStackTrace();
             logger.error("注销失败", e);
         }
+    }
+    //生成验证码图片
+    @RequestMapping("/register/valicode")
+    public void valicode(HttpServletResponse response,HttpSession session) throws Exception{
+        //利用图片工具生成图片
+        //第一个参数是生成的验证码，第二个参数是生成的图片
+        Object[] objs = ImageUtil.createImage();
+        //将验证码存入Session
+        session.setAttribute("imageCode",objs[0]);
+        //将图片输出给浏览器
+        BufferedImage image = (BufferedImage) objs[1];
+        response.setContentType("image/png");
+        OutputStream os = response.getOutputStream();
+        ImageIO.write(image, "png", os);
+
+
     }
 }

@@ -67,7 +67,7 @@ public class IndexController extends AbstractController {
         request.setAttribute("articles", contentVos);
         request.setAttribute("statistics", staticticsBo);
         request.setAttribute("logs", logVos);
-        return "admin/index";
+        return "user/index";
     }
 
     @GetMapping(value = "profile")
