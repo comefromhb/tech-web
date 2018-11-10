@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:with="title='管理中心',active='home'">
+<header th:replace="user/header::headerFragment(${title},${active})">
+</header>
+<head>
+    <script th:src="@{/jantent/assets/js/amazeui.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/jantent/assets/css/amazeui.min.css}"/>
+</head>
+<body class="fixed-left">
+<div id="wrapper">
+    <div th:replace="user/header::header-body"></div>
+    <div class="content-page">
+        <div class="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h4 class="page-title">仪表盘</h4>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="mini-stat clearfix bx-shadow bg-info">
+                                <span class="mini-stat-icon"><i class="fa fa-quote-right" aria-hidden="true"></i></span>
+                                <div class="mini-stat-info text-right">
+                                    推荐了<span class="counter" th:text="${statistics.articles}"></span>位学员
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="mini-stat clearfix bg-purple bx-shadow">
+                                <span class="mini-stat-icon"><i class="fa fa-comments-o" aria-hidden="true"></i></span>
+                                <div class="mini-stat-info text-right">
+                                    报名了<span class="counter" th:text="${statistics.comments}"></span>个学员
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="mini-stat clearfix bg-success bx-shadow">
+                                <span class="mini-stat-icon"><i class="fa fa-cloud-upload"
+                                                                aria-hidden="true"></i></span>
+                                <div class="mini-stat-info text-right">
+                                    获得了<span class="counter" th:text="${statistics.attachs}"></span>份收益
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="mini-stat clearfix bg-primary bx-shadow">
+                                <span class="mini-stat-icon"><i class="fa fa-link" aria-hidden="true"></i></span>
+                                <div class="mini-stat-info text-right">
+                                    发展了<span class="counter" th:text="${statistics.links}"></span>个团队
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">我推荐的考生们</h4>
+                                </div>
+                                <div class="panel-body">
+                                    <table class="am-table am-table-bordered  am-table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>考生微信号</th>
+                                                <th>当前进度</th>
+                                                <th>收益（元）</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody  th:remove="all-but-first">
+                                            <tr  th:each="cust:${custList}">
+                                                <td th:text="${cust.name}">lin</td>
+                                                <td th:text="${cust.status}">已返现</td>
+                                                <td th:text="${cust.fee}">200</td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">我推荐的团队们</h4>
+                                </div>
+                                <div class="panel-body">
+                                    <table class="am-table am-table-bordered  am-table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>GTI昵称</th>
+                                            <th>推荐学生数</th>
+                                            <th>成单数</th>
+                                            <th>收益（元）</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>老王</td>
+                                            <td>12</td>
+                                            <td>6</td>
+                                            <td>120</td>
+                                        </tr>
+                                        </tbody>
+                                        <tfoot>
+
+                                        </tfoot>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div th:replace="user/footer :: footer-content"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="user/footer :: footer"></div>
+</body>
+</html>
