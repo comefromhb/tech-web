@@ -31,8 +31,8 @@ import java.io.OutputStream;
 /**
  * 登录控制
  *
- * @author tangj
- * @date 2018/1/21 14:07
+ * @author lincl
+ * @date 2018/12/06 modify
  */
 @Controller
 @RequestMapping("/admin")

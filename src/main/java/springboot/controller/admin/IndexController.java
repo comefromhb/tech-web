@@ -67,6 +67,10 @@ public class IndexController extends AbstractController {
         request.setAttribute("articles", contentVos);
         request.setAttribute("statistics", staticticsBo);
         request.setAttribute("logs", logVos);
+        //如果是管理员
+        UserVo users = this.user(request);
+        if(users.getUid()==1)return "admin/index";
+        //
         return "user/index";
     }
 

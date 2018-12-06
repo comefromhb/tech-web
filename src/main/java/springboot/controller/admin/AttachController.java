@@ -94,8 +94,9 @@ public class AttachController extends AbstractController {
                     String ftype = MyUtils.isImage(multipartFile.getInputStream()) ? Types.IMAGE.getType() : Types.FILE.getType();
                     File file = new File(CLASSPATH + fkey);
                     FileCopyUtils.copy(multipartFile.getInputStream(), new FileOutputStream(file));
-                    attachService.save(name, fkey, ftype, uid);
-                    AttachVo attach = new AttachVo();
+                    AttachVo attach = attachService.save(name, fkey, ftype, uid);
+                    //AttachVo attach = new AttachVo();
+                    System.out.println("attach = " + attach.getId());
                     attach.setFkey(fkey);
                     attachVoList.add(attach);
                 }
